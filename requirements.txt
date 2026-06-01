@@ -1,0 +1,11 @@
+pandas
+requests
+beautifulsoup4
+matplotlib
+seaborn
+numpy
+scipy
+statsmodels
+scikit-learn
+prophet
+pytest
