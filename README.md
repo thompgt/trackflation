@@ -20,6 +20,17 @@ We compare the rate of "Trackflation" across different disciplines.
 
 The analysis shows that longer distance events (Marathon, 10000m) tend to see a higher total percentage improvement compared to short sprints (100m, 200m). This highlights that while absolute time gains in sprints are small, they represent significant athletic barriers, whereas distance running has seen more substantial relative "inflation" due to pacing, nutrition, and shoe technology.
 
+## Causal Inference: The "Shoe Effect"
+
+We conducted a **Difference-in-Differences (DiD)** analysis to isolate the impact of carbon-plated technology (post-2017) on performance.
+
+### Key Takeaways:
+- **Disproportional Impact**: Distance events (Marathon, 10k) saw a statistically significant performance "jump" compared to short sprints after 2017.
+- **Estimated Causal Gain**: Carbon plates are estimated to have provided a **~1.5% to 2.0% efficiency gain** in marathon times beyond the natural athletic trend.
+- **Technological Inflation**: The "Trackflation" observed in the last decade is heavily driven by equipment evolution rather than purely biological advancement.
+
+Detailed causal methodology and plots are available in the [DiD Analysis Notebook](notebooks/did_shoe_analysis.ipynb).
+
 ## Cumulative Analysis (1974-2046)
 
 The table below shows historical best times, real World Records as of June 2026, and our AI-driven projections for the next 20 years.
