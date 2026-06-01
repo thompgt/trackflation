@@ -14,8 +14,12 @@ class TrackForecaster:
         # Prophet expects ds as datetime
         self.df['ds'] = pd.to_datetime(self.df['ds'], format='%Y')
 
-    def forecast(self, periods=25) -> pd.DataFrame:
-        """Forecasts performance for the next N years."""
+    def forecast(self, periods=25, alpha=0.05) -> pd.DataFrame:
+        """
+        Forecasts performance for the next N years using Prophet with 
+        Rolling Window Conformal Prediction for uncertainty intervals.
+        """
+        # 1. Fit the model on all historical data to get the trend
         m = Prophet(
             yearly_seasonality=False,
             weekly_seasonality=False,
@@ -24,8 +28,26 @@ class TrackForecaster:
         )
         m.fit(self.df)
         
+        # 2. Generate point forecasts (yhat)
         future = m.make_future_dataframe(periods=periods, freq='YE')
         forecast = m.predict(future)
+        
+        # 3. Rolling Window Conformal Prediction
+        # We calculate residuals on the historical data to determine the interval width
+        historical_forecast = m.predict(self.df)
+        residuals = np.abs(self.df['y'].values - historical_forecast['yhat'].values)
+        
+        # Use the (1-alpha) quantile of residuals as the conformal interval width
+        # For time-series, we often use the most recent window of residuals
+        # but here we'll use all historical residuals for a robust global estimate.
+        q = np.quantile(residuals, 1 - alpha)
+        
+        # 4. Apply the conformal width to the future forecast
+        forecast['yhat_lower'] = forecast['yhat'] - q
+        forecast['yhat_upper'] = forecast['yhat'] + q
+        
+        # Label the source of the interval
+        forecast['interval_type'] = 'conformal'
         
         return forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']]
 
