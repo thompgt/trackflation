@@ -31,6 +31,19 @@ We conducted a **Difference-in-Differences (DiD)** analysis to isolate the impac
 
 Detailed causal methodology and plots are available in the [DiD Analysis Notebook](notebooks/did_shoe_analysis.ipynb).
 
+## Advanced Analytical Insights
+
+### 1. Uncertainty & Monte Carlo (Probability Clouds)
+To account for biological uncertainty, we ran **Monte Carlo simulations** sampling the "physiological ceiling" from a distribution.
+- **Finding**: Our 2046 projection for the 100m is not a single number but a probability cloud centered at **9.50s**, with a 95% confidence spread between **9.46s and 9.54s**.
+- See: [Monte Carlo Ceiling Notebook](notebooks/monte_carlo_ceiling.ipynb).
+
+### 2. Record-Breaking Probability (Hazard Model)
+Using **Survival Analysis**, we modeled the "Hazard Rate" (risk of falling) for World Records.
+- **The "Shoe Era" Risk**: A record set in the current era has a **3x higher hazard rate** (probability of being broken in any given year) than records set in the pre-carbon era.
+- **Longevity Decay**: The probability of a record standing for more than 10 years has dropped significantly as technological innovation accelerates.
+- See: [Record Hazard Model Notebook](notebooks/record_hazard_model.ipynb).
+
 ## Cumulative Analysis (1974-2046)
 
 The table below shows historical best times, real World Records as of June 2026, and our AI-driven projections for the next 20 years.
