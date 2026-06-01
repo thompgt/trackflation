@@ -9,3 +9,6 @@ statsmodels
 scikit-learn
 prophet
 pytest
+ipykernel
+nbformat
+nbconvert
