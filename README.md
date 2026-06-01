@@ -20,23 +20,23 @@ We compare the rate of "Trackflation" across different disciplines.
 
 The analysis shows that longer distance events (Marathon, 10000m) tend to see a higher total percentage improvement compared to short sprints (100m, 200m). This highlights that while absolute time gains in sprints are small, they represent significant athletic barriers, whereas distance running has seen more substantial relative "inflation" due to pacing, nutrition, and shoe technology.
 
-## Cumulative Analysis (1974-2044)
+## Cumulative Analysis (1974-2046)
 
-The table below shows historical best times and our AI-driven projections for the next 20 years.
+The table below shows historical best times, real World Records as of June 2026, and our AI-driven projections for the next 20 years.
 
-| Event        | 2000       | 2010       | Current (2024)   | 20-yr Prediction (2044)   |
+| Event        | 2000       | 2010       | Current (2026)   | 20-yr Prediction (2046)   |
 |:-------------|:-----------|:-----------|:-----------------|:--------------------------|
-| 100m         | 10.00      | 9.88       | 9.73             | 9.43                      |
-| 200m         | 20.00      | 19.79      | 19.54            | 19.02                     |
-| 400m         | 43.51      | 43.09      | 42.59            | 41.55                     |
-| 800m         | 1:41.52    | 1:40.47    | 1:39.22          | 1:36.62                   |
-| 1500m        | 3:28.04    | 3:25.95    | 3:23.45          | 3:18.25                   |
-| 5000m        | 12:45.13   | 12:38.84   | 12:31.35         | 12:15.56                  |
-| 10000m       | 26:30.26   | 26:17.68   | 26:02.70         | 25:31.05                  |
-| Marathon     | 2:05:56.09 | 2:05:03.67 | 2:04:01.23       | 2:01:48.79                |
-| Steeplechase | 7:50.09    | 7:45.89    | 7:40.90          | 7:30.40                   |
+| 100m         | 9.85       | 9.72       | 9.58             | 9.37                      |
+| 200m         | 19.75      | 19.52      | 19.19            | 18.67                     |
+| 400m         | 43.72      | 43.36      | 43.03            | 42.58                     |
+| 800m         | 1:43.24    | 1:42.30    | 1:40.91          | 1:38.73                   |
+| 1500m        | 3:30.97    | 3:28.90    | 3:26.00          | 3:21.32                   |
+| 5000m        | 13:01.11   | 12:51.25   | 12:35.36         | 12:12.30                  |
+| 10000m       | 26:59.74   | 26:41.06   | 26:11.00         | 25:27.24                  |
+| Marathon     | 2:04:08.53 | 2:02:24.78 | 1:59:30.00       | 1:55:27.55                |
+| Steeplechase | 8:06.17    | 8:00.46    | 7:52.11          | 7:38.86                   |
 
-*Note: Data for 2000-2024 is simulated for demonstration; 2044 is the median projection (yhat).*
+*Note: 2026 data reflects actual current World Records; 2046 is the median projection (yhat) using Rolling Window Conformal Prediction.*
 
 ## Visualizations
 
