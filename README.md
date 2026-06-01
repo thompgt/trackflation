@@ -8,6 +8,18 @@ Analyze historical World Athletics top times and project future world records us
 - **Conformal Prediction**: Provides statistically sound uncertainty intervals for future performance limits.
 - **Future Projections**: Estimates WRs for the next 20+ years using Prophet + CP.
 
+## Cross-Event Improvement Analysis
+
+We compare the rate of "Trackflation" across different disciplines. 
+
+### Relative Improvement % (1974-2024)
+![Improvement Comparison Line](improvement_comparison_line.png)
+
+### Total Improvement % (Bar Chart)
+![Improvement Comparison Bar](improvement_comparison_bar.png)
+
+The analysis shows that longer distance events (Marathon, 10000m) tend to see a higher total percentage improvement compared to short sprints (100m, 200m). This highlights that while absolute time gains in sprints are small, they represent significant athletic barriers, whereas distance running has seen more substantial relative "inflation" due to pacing, nutrition, and shoe technology.
+
 ## Cumulative Analysis (1974-2044)
 
 The table below shows historical best times and our AI-driven projections for the next 20 years.
