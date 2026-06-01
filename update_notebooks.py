@@ -1,12 +1,25 @@
 import nbformat as nbf
 import os
 
+# Physical Floors (Caps) for tapering growth
+caps = {
+    '100m': 9.45,
+    '200m': 18.90,
+    '400m': 42.50,
+    '800m': 99.50,
+    '1500m': 204.00,
+    '5000m': 745.00,
+    '10000m': 1550.00,
+    'Marathon': 7020.00,
+    'Steeplechase': 465.00
+}
+
 def update_notebook(file_path, event_name, is_sprint):
     with open(file_path, 'r', encoding='utf-8') as f:
         nb = nbf.read(f, as_version=4)
     
-    # Define new cells
-    markdown_cell = nbf.v4.new_markdown_cell(f"## 3. Visual Exploratory Data Analysis\n\nWe analyze the trends, distributions, and depth of the {event_name} over the past 50 years.")
+    # Define EDA cell
+    markdown_eda = nbf.v4.new_markdown_cell(f"## 3. Visual Exploratory Data Analysis\n\nWe analyze the trends, distributions, and depth of the {event_name} over the past 50 years.")
     
     eda_code = f"""
 plt.figure(figsize=(15, 30))
@@ -68,41 +81,52 @@ plt.title(\"{event_name}: Impact of Wind on Performance\")
 plt.gca().invert_yaxis()
 plt.show()
 """
+    code_eda = nbf.v4.new_code_cell(eda_code.strip())
+
+    # Define Projection cell
+    markdown_proj = nbf.v4.new_markdown_cell(f"## 4. Performance Projections (Next 20 Years)\n\nUsing the Prophet model with **Logistic Growth** and **Rolling Window Conformal Prediction** to forecast where the {event_name} World Record might be in 2046.")
     
-    code_cell = nbf.v4.new_code_cell(eda_code.strip())
-    
-    # Logic to find insertion point
+    proj_code = f"""
+forecaster = TrackForecaster(stats_df, cap={caps[event_name]})
+forecast = forecaster.forecast(periods=20)
+
+plt.figure(figsize=(14, 7))
+plt.plot(stats_df['year'], stats_df['best'], 'ko', label='Historical Data')
+plt.plot(pd.to_datetime(forecast['ds']).dt.year, forecast['yhat'], color='green', label='Prophet Projection (Tapered)')
+plt.fill_between(pd.to_datetime(forecast['ds']).dt.year, forecast['yhat_lower'], forecast['yhat_upper'], color='green', alpha=0.2, label='Conformal Interval')
+
+plt.title(\"{event_name} World Record Projection (2026-2046)\", fontsize=16)
+plt.ylabel('Time (seconds)')
+plt.xlabel('Year')
+plt.gca().invert_yaxis()
+plt.legend()
+plt.show()
+
+proj_2046 = forecast.iloc[-1]['yhat']
+print(f\"Projected {event_name} WR in 2046: {{forecaster.seconds_to_str(proj_2046)}}\")
+"""
+    code_proj = nbf.v4.new_code_cell(proj_code.strip())
+
+    # Rebuild notebook cells
     new_cells = []
-    inserted = False
-    skip_next_code = False
-    
-    for i, cell in enumerate(nb.cells):
-        if skip_next_code:
-            if cell.cell_type == 'code':
-                skip_next_code = False
-                continue
-            skip_next_code = False
+    # Keep first 3 sections (Header, Data Gen, Cleaning)
+    section_count = 0
+    for cell in nb.cells:
+        if cell.cell_type == 'markdown' and ('## 1.' in cell.source or '## 2.' in cell.source):
+            new_cells.append(cell)
+            section_count += 1
+        elif section_count < 2 or cell.cell_type == 'code':
+            if section_count <= 2:
+                new_cells.append(cell)
+        
+        if section_count == 2 and cell.cell_type == 'code':
+            # This is the end of section 2
+            new_cells.append(markdown_eda)
+            new_cells.append(code_eda)
+            new_cells.append(markdown_proj)
+            new_cells.append(code_proj)
+            break
             
-        # Check if this is an existing EDA/Visualization section we want to replace
-        if cell.cell_type == 'markdown' and ('3. Visual' in cell.source or '3. Visualizing' in cell.source):
-            new_cells.append(markdown_cell)
-            new_cells.append(code_cell)
-            inserted = True
-            skip_next_code = True # Skip the old code cell that followed
-            continue
-            
-        # Check if we reached the projection section and haven't inserted yet
-        if not inserted and cell.cell_type == 'markdown' and ('Projection' in cell.source or '4. Performance' in cell.source):
-            new_cells.append(markdown_cell)
-            new_cells.append(code_cell)
-            inserted = True
-            
-        new_cells.append(cell)
-
-    if not inserted:
-        new_cells.append(markdown_cell)
-        new_cells.append(code_cell)
-
     nb.cells = new_cells
     
     with open(file_path, 'w', encoding='utf-8') as f:

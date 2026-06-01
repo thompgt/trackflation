@@ -17,6 +17,19 @@ real_wr_2026 = {
     "Steeplechase": 472.11 # 7:52.11
 }
 
+# Physical Floors (Caps) for tapering growth
+caps = {
+    "100m": 9.45,
+    "200m": 18.90,
+    "400m": 42.50,
+    "800m": 99.50, # 1:39.50
+    "1500m": 204.00, # 3:24.00
+    "5000m": 745.00, # 12:25.00
+    "10000m": 1550.00, # 25:50.00
+    "Marathon": 7020.00, # 1:57:00
+    "Steeplechase": 465.00 # 7:45.00
+}
+
 # Base times for simulation in 1974 to roughly match progress
 events = {
     "100m": (10.15, 0.012, "100-metres"),
@@ -67,8 +80,8 @@ for name, (base, rate, code) in events.items():
     clean_df = DataCleaner().clean_scraped_data(df)
     stats_df = AnalysisEngine(clean_df).get_yearly_stats()
     
-    # Reproject for next 20 years (to 2046)
-    forecaster = TrackForecaster(stats_df)
+    # Reproject for next 20 years (to 2046) using tapering logistic caps
+    forecaster = TrackForecaster(stats_df, cap=caps[name])
     forecast = forecaster.forecast(periods=20)
     
     t_2000 = stats_df[stats_df['year'] == 2000]['best'].values[0]
@@ -81,7 +94,7 @@ for name, (base, rate, code) in events.items():
         "2000": forecaster.seconds_to_str(t_2000),
         "2010": forecaster.seconds_to_str(t_2010),
         "Current (2026)": forecaster.seconds_to_str(t_current),
-        "20-yr Projection (2046)": forecaster.seconds_to_str(t_2046)
+        "20-yr Prediction (2046)": forecaster.seconds_to_str(t_2046)
     })
 
 res_df = pd.DataFrame(results)
