@@ -55,7 +55,12 @@ class TrackForecaster:
     def seconds_to_str(seconds: float) -> str:
         if seconds < 60:
             return f"{seconds:.2f}"
-        mins = int(seconds // 60)
+        if seconds < 3600:
+            mins = int(seconds // 60)
+            secs = seconds % 60
+            return f"{mins}:{secs:05.2f}"
+        hours = int(seconds // 3600)
+        mins = int((seconds % 3600) // 60)
         secs = seconds % 60
-        return f"{mins}:{secs:05.2f}"
+        return f"{hours}:{mins:02}:{secs:05.2f}"
         
