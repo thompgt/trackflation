@@ -76,9 +76,22 @@ Detailed analysis notebooks with plots are available for each event:
 - [Steeplechase Analysis](notebooks/3000-metres-steeplechase_analysis.ipynb)
 
 ## Setup
-1. `python -m venv venv`
-2. `.\venv\Scripts\activate`
-3. `pip install -r requirements.txt`
+
+This project uses **Poetry** for dependency management and reproducibility.
+
+1.  **Install Poetry**: Follow the instructions at [python-poetry.org](https://python-poetry.org/docs/#installation).
+2.  **Install Dependencies**:
+    ```bash
+    poetry install
+    ```
+3.  **Run the Analysis**:
+    ```bash
+    poetry run python -m src.main --event "100-metres"
+    ```
+4.  **Open Notebooks**:
+    ```bash
+    poetry run jupyter notebook
+    ```
 
 ## Methodology: Conformal Prediction
 Unlike standard time-series models that assume normal error distributions, we use **Rolling Window Conformal Prediction**. This method calculates the historical residuals of the Prophet model and uses their quantiles to scale the prediction intervals. This ensures that the intervals are robust to the "spiky" nature of track improvements.

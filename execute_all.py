@@ -7,12 +7,10 @@ notebooks = [
     "10000-metres_analysis", "marathon_analysis", "3000-metres-steeplechase_analysis"
 ]
 
-venv_jupyter = os.path.join("venv", "Scripts", "jupyter")
-
 for nb in notebooks:
     path = os.path.join("notebooks", f"{nb}.ipynb")
     print(f"Executing {path}...")
     subprocess.run([
-        venv_jupyter, "nbconvert", "--to", "notebook", "--execute", 
+        "poetry", "run", "jupyter", "nbconvert", "--to", "notebook", "--execute", 
         path, "--output", f"{nb}.ipynb", "--inplace", "--allow-errors"
     ])
