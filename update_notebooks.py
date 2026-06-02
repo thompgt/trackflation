@@ -20,6 +20,7 @@ def update_notebook(file_path, event_name, is_sprint):
     
     # Define EDA cell
     markdown_eda = nbf.v4.new_markdown_cell(f"## 3. Visual Exploratory Data Analysis\n\nWe analyze the trends, distributions, and depth of the {event_name} over the past 50 years.")
+    if 'id' in markdown_eda: del markdown_eda['id']
     
     eda_code = f"""
 plt.figure(figsize=(15, 30))
@@ -82,9 +83,11 @@ plt.gca().invert_yaxis()
 plt.show()
 """
     code_eda = nbf.v4.new_code_cell(eda_code.strip())
+    if 'id' in code_eda: del code_eda['id']
 
     # Define Projection cell
     markdown_proj = nbf.v4.new_markdown_cell(f"## 4. Performance Projections (Next 20 Years)\n\nUsing the Prophet model with **Logistic Growth** and **Rolling Window Conformal Prediction** to forecast where the {event_name} World Record might be in 2046.")
+    if 'id' in markdown_proj: del markdown_proj['id']
     
     proj_code = f"""
 forecaster = TrackForecaster(stats_df, cap={caps[event_name]})
@@ -106,10 +109,10 @@ proj_2046 = forecast.iloc[-1]['yhat']
 print(f\"Projected {event_name} WR in 2046: {{forecaster.seconds_to_str(proj_2046)}}\")
 """
     code_proj = nbf.v4.new_code_cell(proj_code.strip())
+    if 'id' in code_proj: del code_proj['id']
 
     # Rebuild notebook cells
     new_cells = []
-    # Keep first 3 sections (Header, Data Gen, Cleaning)
     section_count = 0
     for cell in nb.cells:
         if cell.cell_type == 'markdown' and ('## 1.' in cell.source or '## 2.' in cell.source):
@@ -120,7 +123,6 @@ print(f\"Projected {event_name} WR in 2046: {{forecaster.seconds_to_str(proj_204
                 new_cells.append(cell)
         
         if section_count == 2 and cell.cell_type == 'code':
-            # This is the end of section 2
             new_cells.append(markdown_eda)
             new_cells.append(code_eda)
             new_cells.append(markdown_proj)
