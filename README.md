@@ -22,14 +22,14 @@ The analysis shows that longer distance events (Marathon, 10000m) tend to see a 
 
 ## Causal Inference: The "Shoe Effect"
 
-We conducted a **Difference-in-Differences (DiD)** analysis to isolate the impact of carbon-plated technology (post-2017) on performance.
+We conducted a multi-method causal study to isolate the impact of carbon-plated technology (post-2017) on elite performance.
 
-### Key Takeaways:
-- **Disproportional Impact**: Distance events (Marathon, 10k) saw a statistically significant performance "jump" compared to short sprints after 2017.
-- **Estimated Causal Gain**: Carbon plates are estimated to have provided a **~1.5% to 2.0% efficiency gain** in marathon times beyond the natural athletic trend.
-- **Technological Inflation**: The "Trackflation" observed in the last decade is heavily driven by equipment evolution rather than purely biological advancement.
+### Key Evidence:
+1. **Difference-in-Differences (DiD)**: Comparing Top 20 Marathoners vs 100m sprinters shows a statistically significant divergence starting in 2017, with distance running gaining an "excess" **~1.0% to 1.5% lead** over natural athletic trends.
+2. **Interrupted Time Series (ITS)**: Analyzed the structural break in marathon times at 2017. The model detects a significant **immediate level shift** and an acceleration in the rate of improvement after the Vaporfly launch.
+3. **Synthetic Control Comparison**: Created a "Synthetic Marathon" counterfactual by weighting sprint trends. The "Performance Wedge" (the gap between actual and synthetic marathon times) represents the quantifiable causal contribution of equipment innovation.
 
-Detailed causal methodology and plots are available in the [DiD Analysis Notebook](notebooks/did_shoe_analysis.ipynb).
+Detailed causal methodology, residual distributions, and counterfactual plots are available in the [Advanced Causal Analysis Notebook](notebooks/did_shoe_analysis.ipynb).
 
 ## Advanced Analytical Insights
 
