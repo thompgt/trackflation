@@ -1,8 +1,13 @@
 # Trackflation: Uncovering Technological Inflation in Elite Athletics
 
-[![Poetry](https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json)](https://python-poetry.org/)
-[![Causal Inference](https://img.shields.io/badge/Method-Causal%20Inference-blue)](notebooks/did_shoe_analysis.ipynb)
-[![Forecasting](https://img.shields.io/badge/Model-Prophet%20%2B%20Conformal-orange)](src/forecaster.py)
+## Tech Stack
+
+![Difference-in-Differences](https://img.shields.io/badge/Difference--in--Differences-0B7261?style=for-the-badge)
+![Survival Analysis](https://img.shields.io/badge/Survival%20Analysis-8E44AD?style=for-the-badge)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![pandas](https://img.shields.io/badge/pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
+![statsmodels](https://img.shields.io/badge/statsmodels-3C5A6E?style=for-the-badge)
+![Prophet](https://img.shields.io/badge/Prophet-1E3A8A?style=for-the-badge)
 
 **Trackflation** is an end-to-end analytical suite designed to quantify the "inflation" of track and field performance over the last 50 years. By combining **Causal Inference (Difference-in-Differences)**, **Survival Analysis**, and **Bayesian Forecasting**, we isolate the impact of equipment innovation (e.g., Carbon Plates) from biological evolution.
 
