@@ -35,7 +35,14 @@ Endurance events (Marathon, 10,000m) have seen significantly higher relative gai
 
 ## 🔮 20-Year Tapered Projections (2026-2046)
 
-Using **Logistic Growth** and **Rolling Window Conformal Prediction**, we project the most realistic World Records for 2046, accounting for biological ceilings.
+Projections use Prophet with **logistic growth** and **split conformal** prediction intervals.
+
+> **Read the logistic floor as an assumption, not a finding.** The logistic fit is
+> bounded below by an assumed floor from `src/config.py`, so it can never cross that
+> floor; "times taper as they approach the limit" restates the assumption. Compare
+> against the floor-free linear fit and `TrackForecaster.floor_sensitivity()`.
+> With only ~26 seasons of data there are too few held-out residuals to support a
+> valid 95% conformal interval, and the forecaster says so at runtime.
 
 | Event        | 2000       | 2026 (Actual WR) | **2046 AI Projection** |
 |:-------------|:-----------|:-----------------|:-----------------------|
@@ -50,7 +57,7 @@ Using **Logistic Growth** and **Rolling Window Conformal Prediction**, we projec
 The codebase is structured for scalability and reproducibility:
 - `src/config.py`: Centralized management of biological floors and historical benchmarks.
 - `src/cli.py`: Unified command-line interface for multi-event analysis.
-- `src/forecaster.py`: Advanced forecasting engine using Prophet with Conformal Prediction.
+- `src/forecaster.py`: Prophet forecaster with split-conformal intervals and floor-sensitivity analysis.
 - `notebooks/`: Specialized causal studies (DiD, ITS, Synthetic Control) and Monte Carlo simulations.
 
 ---
@@ -83,5 +90,5 @@ Total environment parity is guaranteed via **Poetry**.
 
 ## 🧪 Methodology Overview
 - **Causal Inference**: We use **Difference-in-Differences (DiD)** and **Synthetic Control** to isolate the treatment effect of shoe technology.
-- **Uncertainty Quantification**: **Conformal Prediction** ensures that our projection intervals have frequentist coverage guarantees without assuming a specific error distribution.
+- **Uncertainty Quantification**: **Split conformal prediction** calibrates projection intervals on held-out seasons. Coverage guarantees require enough calibration points; with ~26 seasons per event there are not enough, so the intervals are reported as indicative and the code warns.
 - **Sensitivity Analysis**: **Monte Carlo** simulations sample biological floors from physiological distributions to represent our uncertainty about the human limit.
