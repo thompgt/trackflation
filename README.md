@@ -136,6 +136,12 @@ doing more work than the data. Regenerate with
 - `src/forecaster.py`: Prophet with split-conformal intervals and floor-sensitivity
   analysis.
 - `src/cli.py`: `scrape`, `run-event`, `compare-all`, `generate-report`.
+- `notebooks/event_analysis.ipynb`: one parameterised notebook covering all nine
+  events. It replaces nine near-identical 490 KB copies that differed only in two
+  literals; set `EVENT` in the parameter cell or drive it with papermill.
+- `notebooks/did_shoe_analysis.ipynb`: the DiD, event study and placebo test above.
+- `notebooks/record_hazard_model.ipynb`: why the "3x" claim is withdrawn.
+- `notebooks/monte_carlo_ceiling.ipynb`: floor-assumption sensitivity analysis.
 - `scripts/verify_world_records.py`: re-checks `src/config.py` against the live
   all-time toplists.
 
@@ -177,7 +183,9 @@ poetry run pytest
 `seconds_to_str` round trip), the wind and dedup rules, the robust anomaly
 detector, the forecast horizon, and the toplist HTML parser against fixture
 markup. No test touches the network. GitHub Actions runs them on Python 3.11, 3.12
-and 3.13 (`.github/workflows/ci.yml`).
+and 3.13, and a second job executes every notebook top to bottom against the
+committed data, so a notebook that cannot run in order fails the build
+(`.github/workflows/ci.yml`).
 
 `scripts/verify_world_records.py` re-checks `src/config.py` against the live World
 Athletics all-time toplists. It is deliberately outside the test run, since it

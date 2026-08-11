@@ -42,3 +42,37 @@ jobs:
       - name: Run tests
         # The suite is fully offline: no test touches World Athletics.
         run: poetry run pytest -q
+
+  notebooks:
+    name: Execute notebooks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Poetry
+        run: pipx install poetry
+
+      - name: Cache Poetry virtualenv
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pypoetry
+          key: poetry-nb-${{ runner.os }}-${{ hashFiles('poetry.lock') }}
+
+      - name: Install dependencies
+        run: poetry install --no-interaction
+
+      - name: Run every notebook top to bottom
+        # Notebooks read the committed data/processed/ CSV, so this needs no
+        # network either. A notebook that cannot run in order fails the build.
+        run: |
+          for nb in notebooks/*.ipynb; do
+            echo "::group::$nb"
+            poetry run jupyter nbconvert --to notebook --execute \
+              --ExecutePreprocessor.timeout=1800 \
+              --output-dir /tmp/nb-out "$nb"
+            echo "::endgroup::"
+          done
