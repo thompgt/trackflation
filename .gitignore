@@ -29,8 +29,9 @@ env/
 *.stan
 *.hpp
 
-# Generated analysis output (regenerate with the CLI)
-reports/
+# reports/ IS committed: it is the output of `trackflation compare-all` and
+# `generate-report` over the committed data, and the README links to it. Both are
+# regenerable from data/processed/ with no network access.
 
 # Scraper HTTP cache and raw scrape output (regenerate with `trackflation scrape`).
 # data/processed/ IS committed: it is the exact input behind every number in the
