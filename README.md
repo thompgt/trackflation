@@ -98,6 +98,24 @@ Total environment parity is guaranteed via **Poetry**.
 
 ---
 
+## ✅ Tests & CI
+
+```bash
+poetry run pytest
+```
+
+80 offline tests cover mark/time parsing (including the HH:MM:SS branch and a
+`seconds_to_str` round trip), the wind and dedup rules, the robust anomaly
+detector, the forecast horizon, and the toplist HTML parser against fixture
+markup. No test touches the network. GitHub Actions runs them on Python
+3.11, 3.12 and 3.13 (`.github/workflows/ci.yml`).
+
+`scripts/verify_world_records.py` re-checks `src/config.py` against the live
+World Athletics all-time toplists. It is deliberately outside the test run,
+since it needs the network.
+
+---
+
 ## 🧪 Methodology Overview
 - **Causal Inference**: We use **Difference-in-Differences (DiD)** and **Synthetic Control** to isolate the treatment effect of shoe technology.
 - **Uncertainty Quantification**: **Split conformal prediction** calibrates projection intervals on held-out seasons. Coverage guarantees require enough calibration points; with ~26 seasons per event there are not enough, so the intervals are reported as indicative and the code warns.
