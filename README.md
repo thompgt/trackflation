@@ -55,7 +55,8 @@ Projections use Prophet with **logistic growth** and **split conformal** predict
 ## 🛠️ Production-Grade Architecture
 
 The codebase is structured for scalability and reproducibility:
-- `src/config.py`: Centralized management of biological floors and historical benchmarks.
+- `src/scraper.py`: World Athletics toplist scraper (cached, retried, schema-asserted).
+- `src/config.py`: World records (cited and machine-verifiable), assumed floors, event metadata.
 - `src/cli.py`: Unified command-line interface for multi-event analysis.
 - `src/forecaster.py`: Prophet forecaster with split-conformal intervals and floor-sensitivity analysis.
 - `notebooks/`: Specialized causal studies (DiD, ITS, Synthetic Control) and Monte Carlo simulations.
@@ -71,17 +72,26 @@ Total environment parity is guaranteed via **Poetry**.
    poetry install
    ```
 
-2. **Run Analysis for an Event**:
+2. **Download the data** (World Athletics season toplists, 2001-2026, ~450 requests
+   with a 1s delay; results are cached under `data/cache/`):
    ```bash
-   poetry run trackflation run-event --event "marathon"
+   poetry run trackflation scrape
+   ```
+   The cleaned output is committed at `data/processed/toplists_clean.csv`, so this
+   step is only needed to refresh it.
+
+3. **Run Analysis for an Event**:
+   ```bash
+   poetry run trackflation run-event --event Marathon
    ```
 
-3. **Generate Global Comparisons**:
+4. **Generate Global Comparisons** (writes figures into `reports/`):
    ```bash
    poetry run trackflation compare-all
+   poetry run trackflation generate-report
    ```
 
-4. **Explore Advanced Causal Models**:
+5. **Explore Advanced Causal Models**:
    - [Difference-in-Differences Study](notebooks/did_shoe_analysis.ipynb)
    - [Monte Carlo Ceiling Sensitivity](notebooks/monte_carlo_ceiling.ipynb)
    - [Record Breaking Hazard Model](notebooks/record_hazard_model.ipynb)

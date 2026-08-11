@@ -32,8 +32,11 @@ env/
 # Generated analysis output (regenerate with the CLI)
 reports/
 
-# Scraper HTTP cache (regenerate with `trackflation scrape`)
+# Scraper HTTP cache and raw scrape output (regenerate with `trackflation scrape`).
+# data/processed/ IS committed: it is the exact input behind every number in the
+# README, so the results can be checked without re-scraping.
 data/cache/
+data/raw/
 
 # OS
 .DS_Store
