@@ -1,9 +1,15 @@
 # Trackflation Project Plan
 
-Analyze historical World Athletics top times over the last 50+ years to identify "performance inflation" and project future world records.
+Analyze historical World Athletics top times to identify "performance inflation" and project future world records.
+
+> **Status note.** This is the original plan, kept for history. Two things in it did
+> not survive contact with the data: World Athletics season toplists only go back to
+> **2001**, not 1974, so the analysis window is 26 seasons rather than 50+; and
+> hurdles were never implemented. See the README for what the project actually does
+> and finds.
 
 ## Project Goals
-1. **Data Acquisition**: Scrape or use APIs to collect the top 100 times for each track event (100m, 200m, 400m, 800m, 1500m, 5000m, 10000m, hurdles) per year from 1974 to present.
+1. **Data Acquisition**: Scrape the top 100 times for each track event (100m, 200m, 400m, 800m, 1500m, 5000m, 10000m, marathon, steeplechase) per season, 2001 to present.
 2. **Historical Analysis**: 
     - Identify events with the highest rate of improvement (slope of top times).
     - Analyze the "depth" of events (how much the gap between #1 and #100 has changed).
